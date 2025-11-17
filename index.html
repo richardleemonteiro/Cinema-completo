@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinoplex Cinemas</title>
+
+  <!-- Ligação com o CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header>
+    <img src="logo.png" alt="Kayanoplex Logo" class="logo-header">
+    <nav>
+      <ul>
+        <li><a href="#">Filmes</a></li>
+        <li><a href="#">Sessões</a></li>
+        <li><a href="#">Cinemas</a></li>
+        <li><a href="#">Promoções</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="top-bar">
+    <select>
+      <option>Selecione seu cinema / sua cidade</option>
+      <option>Rio de Janeiro</option>
+    </select>
+    <div class="search">
+      <input type="text" placeholder="Buscar...">
+    </div>
+  </div>
+
+  <!-- Carrossel de filmes -->
+  <div class="carousel">
+    <button class="prev">&#10094;</button>
+    
+    <div class="carousel-container">
+      <img src="s3.jpg" alt="Superman(2025)" data-title="Superman(2025)">
+      <img src="fo1.jpg" alt="Fórmula 1: O Filme" data-title="Fórmula 1: O Filme">
+      <img src="m3.jpg" alt="Missão Impossível: O acerto final" data-title="Missão Impossível: O acerto final">
+    </div>
+    
+    <div class="carousel-title">Superman</div>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <section>
+    <h2>Em Cartaz</h2>
+    <div class="filmes">
+      <div class="card">
+        <img src="f2.jpg" alt="Fórmula 1">
+        <p>Formula 1</p>
+        <button class="ver-sessoes" data-filme="f5.jpg" data-titulo="Formula 1">Ver sessões</button>
+      </div>
+      <div class="card">
+        <img src="q1.jpg" alt="Quarteto Fantástico">
+        <p>Quarteto Fantástico</p>
+        <button class="ver-sessoes" data-filme="q5.jpg" data-titulo="Quarteto Fantástico">Ver sessões</button>
+      </div>
+      <div class="card">
+        <img src="s2.jpg" alt="Superman">
+        <p>Superman</p>
+        <button class="ver-sessoes" data-filme="super.jpg" data-titulo="Superman">Ver sessões</button>
+      </div>
+      <div class="card">
+        <img src="m2.jpg" alt="Missão Impossível">
+        <p>Missão Impossível: O acerto final</p>
+        <button class="ver-sessoes" data-filme="m5.jpg" data-titulo="Missão Impossível">Ver sessões</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cinemas</h2>
+    <div class="cinemas-list">
+      <div class="card">
+        <img src="k1.jpg" alt="KinoplexWest">
+        <p>Kayanoplex WestShopping</p>
+        <button>Ver programação</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ligação com o JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

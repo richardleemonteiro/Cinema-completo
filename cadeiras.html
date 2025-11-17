@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cadeiras</title>
+    <meta name="Cadeiras" content="Página de Cadeiras do Site Kinoplex Cinemas">
+<style>
+  :root {
+    --bg:#040405;
+    --card:#0b0b0d;
+    --muted:#9aa3ae;
+    --accent:#ffcc00;
+    --accent-2:#ff6b00;
+    --seat-base:#2b2f36;
+    --seat-front:#3b3f47;
+    --seat-selected:#ff6b00;
+    --seat-reserved:#6b7280;
+    --shadow: 0 10px 30px rgba(0,0,0,0.6);
+    --radius:14px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    background: radial-gradient(1200px 400px at 10% 10%, rgba(0,212,255,0.03), transparent 6%),
+                radial-gradient(800px 300px at 90% 90%, rgba(255,204,0,0.02), transparent 8%),
+                var(--bg);
+    color:#e6eef2;
+    padding:28px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .app{
+    width:100%;
+    max-width:1100px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
+    border-radius:16px;
+    padding:20px;
+    box-shadow: var(--shadow);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+  }
+  .brand{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .logo{
+    width:62px;
+    height:62px;
+    border-radius:10px;
+    background: linear-gradient(135deg,#0b1220 0%, rgba(255,255,255,0.02) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+  .logo .k{ font-weight:900; font-size:22px; color:var(--accent); }
+  .title .name{ font-weight:800; font-size:18px; color:#fff; }
+
+  .steps{ display:flex; gap:8px; }
+  .step{ padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); color:var(--muted); }
+  .step.active{ background: linear-gradient(90deg, rgba(0,212,255,0.05), rgba(255,204,0,0.03)); color:var(--accent-2); }
+
+  .main{ display:flex; gap:22px; align-items:flex-start; }
+  .left{ flex:1 1 680px; }
+  .right{ width:320px; }
+
+  .screen{
+    width:70%;
+    margin:10px auto 18px auto;
+    height:40px;
+    border-radius:12px;
+    background: linear-gradient(180deg,#0c1625,#101011);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted);
+    font-weight:800;
+    letter-spacing:4px;
+  }
+
+  .legend{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-bottom:12px;
+    color:var(--muted);
+    font-size:13px;
+  }
+  .badge{ width:18px; height:18px; border-radius:4px; display:inline-block; }
+
+  .seating-grid{
+    display:grid;
+    gap:12px;
+    padding:18px;
+    border-radius:12px;
+    background: rgba(255,255,255,0.01);
+  }
+
+  .row-label{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:40px;
+    color:var(--muted);
+    font-weight:800;
+  }
+
+  .seat{
+    width:56px;
+    height:56px;
+    border-radius:10px;
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-weight:800;
+    font-size:13px;
+    background: linear-gradient(180deg, #3a3f47 0%, #2f3338 100%);
+    color:#e6eef2;
+    transition: transform .12s ease;
+  }
+  .seat:hover{ transform:translateY(-6px) scale(1.04); }
+  .seat.selected{
+    background: linear-gradient(180deg, #ff6a0054, #e6580064);
+    color:#ff6b00;
+    border:1px solid #ff6b00;
+  }
+  .seat.reserved{
+    cursor:not-allowed;
+    opacity:0.5;
+    background: linear-gradient(180deg,#4b5563,#34393f);
+  }
+
+  .panel{
+    padding:14px;
+    border-radius:12px;
+    background: rgba(255,255,255,0.02);
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    padding:10px 14px;
+    font-weight:900;
+    cursor:pointer;
+    border:none;
+  }
+  .btn-primary{
+    background: linear-gradient(90deg,var(--accent-2), #ff6b00);
+    color:#ffffff;
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--muted);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  .selected-list{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    padding:8px;
+    min-height:64px;
+    background:rgba(255,255,255,0.02);
+    border-radius:8px;
+  }
+
+  .combo{ display:flex; gap:12px; align-items:center; padding:10px; border-radius:10px; background:rgba(255,255,255,0.02); }
+  .combo .pic{ width:60px; height:60px; border-radius:8px; background:#2f3338; display:flex; align-items:center; justify-content:center; font-size:24px; }
+  .qty{ display:flex; gap:6px; align-items:center; }
+  .qty button{ width:34px; height:34px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:#fff; cursor:pointer; }
+
+  .hidden{ display:none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <button class="btn btn-ghost back-btn" onclick="history.back()">← Voltar</button>
+    <div class="brand">
+      <div class="title">
+    <img src="logo.png" alt="Kayanoplex Logo" class="logo-header" width="220px" height="50px"> 
+        <div class="tag">Cinema • Experiência Premium</div>
+      </div>
+    </div>
+    <nav class="steps">
+      <div class="step active" id="stepSeats">1 • Assentos</div>
+      <div class="step" id="stepCombos">2 • Combos</div>
+      <div class="step" id="stepPay">3 • Pagamento</div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <section class="left">
+      <div class="screen">TELA</div>
+
+      <div id="seatView" class="view">
+        <div class="legend">
+          <div class="item"><span class="badge" style="background:linear-gradient(180deg,#3a3f47,#2f3338)"></span> Disponível</div>
+          <div class="item"><span class="badge" style="background:linear-gradient(180deg, #ff6a00b5, #00d4ff0f); border:1px solid #ff6b00"></span> Selecionado</div>
+          <div class="item"><span class="badge" style="background:linear-gradient(180deg,#4b5563,#34393f); opacity:.6"></span> Reservado</div>
+        </div>
+
+        <div id="seatingGrid" class="seating-grid"></div>
+      </div>
+
+      <div id="comboView" class="hidden">
+        <h2>Combos de Pipoca</h2>
+        <div id="combosGrid" class="combos"></div>
+        <div style="display:flex; gap:8px; margin-top:14px;">
+          <button id="backToSeats" class="btn btn-ghost">← Voltar</button>
+          <button id="toPaymentFromCombos" class="btn btn-primary">Finalizar Compra</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="right">
+      <div class="panel">
+        <h3>Seu pedido</h3>
+        <div class="muted-small">Assentos selecionados:</div>
+        <div id="selectedList" class="selected-list">— nenhum —</div>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button id="clearSeats" class="btn btn-ghost">Limpar</button>
+          <button id="proceedToCombos" class="btn btn-primary">Selecionar combos →</button>
+        </div>
+        <div style="margin-top:12px; font-weight:900; display:flex; justify-content:space-between;">
+          <span>Total estimado:</span><span id="totalPrice">R$ 0,00</span>
+        </div>
+        <div style="color:var(--muted); font-size:13px; margin-top:6px;">Preço por ingresso: <strong>R$ 15,00</strong></div>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<div id="modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center;">
+  <div style="background:#ff6b00; padding:28px; border-radius:12px; width:min(500px,90%); text-align:center;">
+    <button id="btn-payment" class="btn btn-primary">Finalizar Compra </button>
+    <button id="modalClose" class="btn btn-ghost">Fechar</button>
+  </div>
+</div>
+
+<script>
+const rows = ['A','B','C','D'];
+const cols = 5;
+const pricePerTicket = 15.00;
+const reservedSeats = ['A3','B5','C2'];
+
+const selectedSeats = new Set();
+const comboSelections = {};
+const combos = [
+  { id: 'c1', name: 'Combo Pequeno', desc: 'Pipoca pequena + refri 300ml', price: 12.00, emoji: '🥤' },
+  { id: 'c2', name: 'Combo Médio', desc: 'Pipoca média + refri 500ml', price: 18.00, emoji: '🍿' },
+  { id: 'c3', name: 'Combo Família', desc: 'Pipoca grande + 2 refri', price: 32.00, emoji: '🍿🍿' }
+];
+
+const seatingGrid = document.getElementById('seatingGrid');
+const selectedList = document.getElementById('selectedList');
+const totalPriceEl = document.getElementById('totalPrice');
+const proceedToCombosBtn = document.getElementById('proceedToCombos');
+const clearSeatsBtn = document.getElementById('clearSeats');
+const seatView = document.getElementById('seatView');
+const comboView = document.getElementById('comboView');
+const combosGrid = document.getElementById('combosGrid');
+const backToSeatsBtn = document.getElementById('backToSeats');
+const toPaymentFromCombosBtn = document.getElementById('toPaymentFromCombos');
+const modal = document.getElementById('modal');
+const modalClose = document.getElementById('modalClose');
+
+function buildSeating(){
+  seatingGrid.innerHTML = '';
+  seatingGrid.style.gridTemplateColumns = `repeat(${cols + 1}, auto)`;
+  rows.forEach(row=>{
+    for(let c=0;c<=cols;c++){
+      if(c===0){
+        const lbl=document.createElement('div');
+        lbl.className='row-label';
+        lbl.textContent=row;
+        seatingGrid.appendChild(lbl);
+      }else{
+        const seatId=row+c;
+        const btn=document.createElement('button');
+        btn.className='seat';
+        btn.textContent=c;
+        btn.title='Assento '+seatId;
+        if(reservedSeats.includes(seatId)){
+          btn.classList.add('reserved');
+        }else{
+          btn.addEventListener('click',()=>toggleSeat(seatId,btn));
+        }
+        seatingGrid.appendChild(btn);
+      }
+    }
+  });
+}
+
+function toggleSeat(id,el){
+  if(el.classList.contains('reserved'))return;
+  if(selectedSeats.has(id)){
+    selectedSeats.delete(id);
+    el.classList.remove('selected');
+  }else{
+    selectedSeats.add(id);
+    el.classList.add('selected');
+  }
+  refreshSummary();
+}
+
+function refreshSummary(){
+  const arr=Array.from(selectedSeats).sort();
+  selectedList.innerHTML='';
+  if(arr.length===0){
+    selectedList.textContent='— nenhum —';
+  }else{
+    arr.forEach(s=>{
+      const pill=document.createElement('div');
+      pill.style.padding='6px 10px';
+      pill.style.borderRadius='8px';
+      pill.style.background='rgba(255,255,255,0.05)';
+      pill.textContent=s;
+      selectedList.appendChild(pill);
+    });
+  }
+  updateTotal();
+}
+
+function updateTotal(){
+  let total=selectedSeats.size*pricePerTicket;
+  Object.keys(comboSelections).forEach(k=>{
+    total+= (comboSelections[k]||0)*(combos.find(c=>c.id===k)?.price||0);
+  });
+  totalPriceEl.textContent=total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+}
+
+clearSeatsBtn.onclick=()=>{
+  selectedSeats.clear();
+  document.querySelectorAll('.seat.selected').forEach(e=>e.classList.remove('selected'));
+  refreshSummary();
+};
+
+proceedToCombosBtn.onclick=()=>{
+  seatView.classList.add('hidden');
+  comboView.classList.remove('hidden');
+};
+
+backToSeatsBtn.onclick=()=>{
+  comboView.classList.add('hidden');
+  seatView.classList.remove('hidden');
+};
+
+function buildCombos(){
+  combosGrid.innerHTML='';
+  combos.forEach(c=>{
+    comboSelections[c.id]=comboSelections[c.id]||0;
+    const wrap=document.createElement('div');
+    wrap.className='combo';
+    wrap.innerHTML=`<div class="pic">${c.emoji}</div>
+      <div class="meta">
+        <div style="font-weight:800">${c.name}</div>
+        <div style="font-size:13px;color:#aaa">${c.desc}</div>
+        <div style="font-weight:700">${c.price.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</div>
+      </div>`;
+    const qty=document.createElement('div');
+    qty.className='qty';
+    const minus=document.createElement('button'); minus.textContent='−';
+    const count=document.createElement('div'); count.textContent=comboSelections[c.id];
+    const plus=document.createElement('button'); plus.textContent='+';
+    qty.append(minus,count,plus);
+    wrap.append(qty);
+    combosGrid.appendChild(wrap);
+    minus.onclick=()=>{ if(comboSelections[c.id]>0){ comboSelections[c.id]--; count.textContent=comboSelections[c.id]; updateTotal(); } };
+    plus.onclick=()=>{ comboSelections[c.id]++; count.textContent=comboSelections[c.id]; updateTotal(); };
+  });
+}
+
+// Exemplo ao clicar no botão "Ir para pagamento"
+toPaymentFromCombosBtn.onclick = () => {
+  // Dados do pedido
+  const movieTitleEl = document.getElementById('movieTitle');
+
+const pedido = {
+    assentos: Array.from(selectedSeats),
+    combos: Object.entries(comboSelections)
+                 .filter(([k, v]) => v > 0)
+                 .map(([k, v]) => `${combos.find(c=>c.id===k).name} x${v}`),
+    total: totalPriceEl.textContent
+};
+
+
+  // Salva no sessionStorage (perde ao fechar o navegador) ou localStorage (fica)
+  sessionStorage.setItem('pedido', JSON.stringify(pedido));
+
+  // Redireciona para a página final
+  window.location.href = 'final.html';
+};
+
+modalClose.onclick=()=>{ modal.style.display='none'; };
+
+buildSeating();
+buildCombos();
+refreshSummary();
+updateTotal();
+</script>
+</body>
+</html>
+<script>

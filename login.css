@@ -1,0 +1,115 @@
+:root {
+  --bg-color: #000000;
+  --container-color: #111111;
+  --text-color: #f5f5f5;
+  --accent-color: #ff7300;
+  --accent-hover: #ff5100;
+  --border-color: #333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+.logo-canto {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  width: 160px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.5));
+}
+
+.logo-centro {
+  width: 250px;
+  height: auto;
+  margin-bottom: 30px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.5));
+}
+
+.login-container {
+  background: var(--container-color);
+  padding: 40px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(255, 166, 0, 0.582);
+  text-align: center;
+}
+
+/* Inputs e Botões */
+.login-container label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #0a0a0a;
+  color: var(--text-color);
+}
+
+.login-container input::placeholder {
+  color: #bbb;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-container button:hover {
+  background: var(--accent-hover);
+}
+
+/* Link alternar login/cadastro */
+.switch-form {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.switch-form a {
+  color: var(--accent-color);
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.switch-form a:hover {
+  color: var(--accent-hover);
+}
+
+/* Esconde o formulário de cadastro por padrão */
+#cadastroForm {
+  display: none;
+}
+
+

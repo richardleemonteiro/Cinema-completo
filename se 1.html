@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sessões — Filme</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #000000;
+      --header-footer: #111111;
+      --text-color: #f5f5f5;
+      --border-color: #bbbbbb;
+      --accent-color: #ff6b00;
+      --highlight-color: #ffc107;
+      --card-bg: #111111;
+      --radius: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 28px;
+    }
+
+    .voltar a {
+      color: var(--highlight-color);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .voltar a:hover {
+      color: var(--accent-color);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      gap: 26px;
+      flex-wrap: wrap;
+    }
+
+    .poster {
+      width: 280px;
+      min-width: 260px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      height: 420px;
+      background: var(--card-bg);
+      box-shadow: 0 0 15px rgba(255, 166, 0, 0.582);
+    }
+
+    .poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: var(--accent-color);
+    }
+
+    .genero {
+      color: var(--highlight-color);
+      margin-top: -6px;
+      font-size: 14px;
+    }
+
+    .sinopse {
+      line-height: 1.5;
+      font-size: 15px;
+      margin-top: 12px;
+    }
+
+    h3 {
+      margin-top: 20px;
+      color: var(--accent-color);
+    }
+
+    .horarios {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Botões de horários */
+    .hora {
+      position: relative;
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: var(--radius);
+      background: var(--accent-color);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .hora:hover {
+      transform: translateY(-3px);
+    }
+
+    .hora.indisponivel {
+      background-color: #555;
+      cursor: not-allowed;
+      color: #999;
+    }
+
+    /* Hover “Comprar” */
+    .hora:not(.indisponivel)::after {
+      content: "Comprar";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      color: #ff6b00;
+      font-size: 14px;
+      font-weight: bold;
+      pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s;
+      opacity: 0;
+    }
+
+    .hora:not(.indisponivel):hover::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .hora:not(.indisponivel):hover {
+      color: transparent;
+      background: #fff;
+    }
+
+    /* Botão selecionado */
+    .hora.selecionado {
+      background-color: var(--highlight-color) !important;
+      color: #000 !important;
+      border: 1px solid var(--highlight-color);
+      transform: translateY(0);
+    }
+
+    .hora.selecionado::after {
+      content: "";
+    }
+
+    .avancar {
+      margin-top: 25px;
+      display: inline-block;
+    }
+
+    .avancar button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: var(--radius);
+      background-color: var(--highlight-color);
+      color: var(--bg-color);
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .avancar button:hover {
+      background-color: var(--accent-color);
+      color: #fff;
+    }
+
+    @media(max-width:750px){
+      .container {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+      .poster {
+        width: 60%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="voltar"><a href="index.html">← Voltar</a></div>
+
+<div class="container">
+  <div class="poster">
+    <img src="f5.jpg" alt="Poster do filme" />
+  </div>
+
+  <div class="info">
+    <h1 id="titulo-filme">Formula 1</h1>
+    <p class="genero" id="info-filme">Gênero: Ação • Duração: 2h39min • Classificação: 12 anos</p>
+
+    <p class="sinopse" id="sinopse-filme">
+     Em F1, um piloto veterano de Fórmula 1 volta da aposentadoria para ser o mentor de seu jovem colega de equipe.
+     No filme produzido pelo heptacampeão de Fórmula 1 Lewis Hamilton, depois de abandonar as pistas, o lendário piloto Sonny Hayes (Brad Pitt)
+     é convencido a voltar a correr para apoiar Joshua Pearce (Damson Idris), o jovem novato da escuderia fictícia ApexGP.
+     Disposto a todos os riscos, Sonny monta uma estratégia para fazer a equipe se tornar vitoriosa, para isso ele precisará do apoio da comissão técnica e de pessoas influentes do esporte,
+     mostrando que a corrida vai muito além das curvas dos autódromos. O longa conta com a participação dos pilotos reais da F1 e foi gravado durante as corridas do GP da Inglaterra.
+    </p>
+
+    <h3>Horários</h3>
+    <div class="horarios">
+      <button class="hora">12:00</button>
+      <button class="hora">14:30</button>
+      <button class="hora">17:00</button>
+      <button class="hora">19:30</button>
+    </div>
+
+    <div class="avancar">
+  <button id="btn-avancar">→ Avançar</button>
+</div>
+
+<script>
+  const horarios = document.querySelectorAll('.hora');
+  const btnAvancar = document.getElementById('btn-avancar');
+  let horarioSelecionado = null;
+
+  horarios.forEach(hora => {
+    hora.addEventListener('click', () => {
+      if (hora.classList.contains('indisponivel')) return;
+
+      horarios.forEach(h => {
+        if (!h.classList.contains('indisponivel')) {
+          h.classList.remove('selecionado');
+        }
+      });
+
+      hora.classList.add('selecionado');
+      horarioSelecionado = hora.textContent; // guarda o horário selecionado
+    });
+  });
+
+  btnAvancar.addEventListener('click', () => {
+    if (!horarioSelecionado) {
+      alert('Por favor, selecione um horário antes de avançar!');
+      return;
+    }
+
+    // redireciona para a página de cadeiras
+    window.location.href = 'cadeiras.html';
+  });
+</script>
+
+
+</body>
+</html>
